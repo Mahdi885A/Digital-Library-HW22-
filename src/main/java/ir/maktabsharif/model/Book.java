@@ -8,18 +8,25 @@ import java.util.List;
 
 @Entity
 public class Book {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String title;
     private String isbn;
+
     @Column(name = "publication_year")
     private int publicationYear;
+
     private BigDecimal price;
+
     @Enumerated(EnumType.STRING)
     private StockStatus stockStatus;
+
     @Embedded
     private PublisherAddress publisherAddress;
+
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "book_author",
@@ -27,24 +34,91 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
     private List<Author> author;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
 
-    public Book(String title, String isbn, int publicationYear, BigDecimal price, StockStatus stockStatus, PublisherAddress publisherAddress, List<Author> author, Category category) {
-        this.title = title;
-        this.isbn = isbn;
-        this.publicationYear = publicationYear;
-        this.price = price;
-        this.stockStatus = stockStatus;
-        this.publisherAddress = publisherAddress;
-        this.author = author;
-        this.category = category;
-    }
-
+    // Constructor برای Hibernate
     public Book() {
     }
+
+
+    // Constructor برای Builder
+    private Book(Builder builder) {
+        this.title = builder.title;
+        this.isbn = builder.isbn;
+        this.publicationYear = builder.publicationYear;
+        this.price = builder.price;
+        this.stockStatus = builder.stockStatus;
+        this.publisherAddress = builder.publisherAddress;
+        this.author = builder.author;
+        this.category = builder.category;
+    }
+
+
+    // Builder
+    public static class Builder {
+
+        private String title;
+        private String isbn;
+        private int publicationYear;
+        private BigDecimal price;
+        private StockStatus stockStatus;
+        private PublisherAddress publisherAddress;
+        private List<Author> author;
+        private Category category;
+
+
+        public Builder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder isbn(String isbn) {
+            this.isbn = isbn;
+            return this;
+        }
+
+        public Builder publicationYear(int publicationYear) {
+            this.publicationYear = publicationYear;
+            return this;
+        }
+
+        public Builder price(BigDecimal price) {
+            this.price = price;
+            return this;
+        }
+
+        public Builder stockStatus(StockStatus stockStatus) {
+            this.stockStatus = stockStatus;
+            return this;
+        }
+
+        public Builder publisherAddress(PublisherAddress publisherAddress) {
+            this.publisherAddress = publisherAddress;
+            return this;
+        }
+
+        public Builder author(List<Author> author) {
+            this.author = author;
+            return this;
+        }
+
+        public Builder category(Category category) {
+            this.category = category;
+            return this;
+        }
+
+
+        public Book build() {
+            return new Book(this);
+        }
+    }
+
+
+    // Getters & Setters
 
     public Long getId() {
         return id;
@@ -117,6 +191,7 @@ public class Book {
     public void setCategory(Category category) {
         this.category = category;
     }
+
 
     @Override
     public String toString() {
