@@ -16,7 +16,7 @@ public class HibernateUtil {
 
     }
 
-    private static EntityManagerFactory getEmf(){
+    private static synchronized EntityManagerFactory getEmf(){
         if(emf== null){
             emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNITE);
         }
