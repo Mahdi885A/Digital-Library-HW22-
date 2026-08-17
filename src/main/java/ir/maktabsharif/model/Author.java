@@ -23,12 +23,10 @@ public class Author {
     private List<Book> books;
 
 
-    // Constructor برای JPA / Hibernate
     public Author() {
     }
 
 
-    // Constructor برای Builder
     private Author(Builder builder) {
         this.name = builder.name;
         this.birthDate = builder.birthDate;
@@ -37,7 +35,6 @@ public class Author {
     }
 
 
-    // Builder
     public static class Builder {
 
         private String name;
@@ -73,7 +70,6 @@ public class Author {
     }
 
 
-    // Getters & Setters
 
     public Long getId() {
         return id;

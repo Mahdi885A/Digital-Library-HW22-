@@ -40,12 +40,10 @@ public class Book {
     private Category category;
 
 
-    // Constructor برای Hibernate
     public Book() {
     }
 
 
-    // Constructor برای Builder
     private Book(Builder builder) {
         this.title = builder.title;
         this.isbn = builder.isbn;
@@ -58,7 +56,6 @@ public class Book {
     }
 
 
-    // Builder
     public static class Builder {
 
         private String title;
@@ -118,7 +115,6 @@ public class Book {
     }
 
 
-    // Getters & Setters
 
     public Long getId() {
         return id;
